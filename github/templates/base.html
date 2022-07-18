@@ -1,0 +1,62 @@
+{% load static i18n %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}GitHub Statistics{% endblock title %}</title>
+
+  {% block css %}
+    
+    <!-- Latest compiled and minified Bootstrap 5 CSS -->
+    <link rel="stylesheet" href="https://bootswatch.com/5/lumen/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../static/css/styles.css" />
+
+  {% endblock %}
+</head>
+
+<body>
+  <img src="../../static/3414990.jpg" alt="travel" class="background">
+  <nav class="navbar navbar-expand-md">
+    <div class="container justify-content-space-between">
+      <div class="mb-2 mb-md-0 mx-auto mx-md-0">
+        <a href="{% url 'home' %}">
+          <img src="../static/logo.png" alt="logo">
+        </a>
+      </div>
+      <ul class="nav nav-pills d-flex flex-sm-row mx-auto mx-md-0">
+        <li class="nav-item">
+          <a class="nav-link {% block nav_home_class %}{% endblock nav_home_class %}" aria-current="page" href="{% url 'home' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% block nav_repos_class %}{% endblock nav_repos_class %}" href="{% url 'repos' %}">Repos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% block nav_sizes_class %}{% endblock nav_sizes_class %}" href="{% url 'sizes' %}">Sizes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% block nav_languages_class %}{% endblock nav_languages_class %}" href="{% url 'languages' %}">Languages</a>
+        </li>
+      </ul>
+  </nav>
+
+  <div class="container">
+    <h1 class="title">{% block page-title %}GitHub Statistics{% endblock page-title %}</h1>
+    {% block content %}
+      <p>Use this document as a way to quick start any new project.</p>
+    {% endblock content %}
+  </div>
+
+  {% block javascript %}
+
+    <!-- Required by Bootstrap v5 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- place project specific Javascript in this file -->
+
+  {% endblock javascript %}
+</body>
+
+</html>
