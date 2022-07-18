@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}GitHub Statistics{% endblock %}
+{% block nav_home_class %}active{% endblock %}
+{% block page-title %}Phuong Anh Hoang's GitHub Statistics{% endblock %}
+
+{% block content %}
+
+<div class="row text-center">
+  <p>These are the statistics of my GitHub. Feel free to browse around to discover more about me projects!</p>
+</div>
+<div class="row justify-content-center">
+  <div class="card text-white border-dark transparent m-3 col-sm-12 col-md-4" style="max-width: 18rem;">
+    <div class="card-header">All Repositories</div>
+    <div class="card-body">
+      <a href="{% url 'repos' %}">
+        <img class="img-fluid" src="../../../static/git.png" alt="">
+      </a>
+    </div>
+  </div>
+  <div class="card text-white border-dark transparent m-3 col-sm-12 col-md-4" style="max-width: 18rem;">
+    <div class="card-header">Repository Sizes</div>
+    <div class="card-body">
+      <a href="{% url 'sizes' %}">
+        <img class="img-fluid" src="../../../static/sizes.png" alt="">
+      </a>
+    </div>
+  </div>
+  <div class="card text-white border-dark transparent m-3 col-sm-12 col-md-4" style="max-width: 18rem;">
+    <div class="card-header">Project Languages</div>
+    <div class="card-body">
+      <a href="{% url 'languages' %}">
+        <img class="img-fluid" src="../../../static/languages.jpg" alt="">
+      </a>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

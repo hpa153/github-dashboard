@@ -1,0 +1,55 @@
+.background {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  opacity: 0.8;
+  filter: blur(6px);
+  -webkit-filter: blur(6px);
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.4) !important;
+  z-index: 100;
+}
+
+.title {
+  font-weight: 900;
+  font-size: xx-large;
+  padding-top: 30%;
+  text-align: center;
+  background: -webkit-linear-gradient(rgb(58, 108, 200), rgb(9, 24, 75));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+p {
+  color: rgb(9, 24, 75);
+  font-size: large;
+}
+
+.transparent {
+  background-color: rgba(0, 0, 0, 0.4) !important;
+}
+
+.star {
+  width: 18px;
+  vertical-align: middle;
+}
+
+.input-group-prepend {
+  height: 38px;
+}
+
+@media only screen and (min-width: 600px) {
+  .title {
+    padding-top: 8%;
+    font-size: xxx-large;
+  }
+}
