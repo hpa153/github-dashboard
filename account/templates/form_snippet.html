@@ -1,0 +1,21 @@
+
+
+<div class="row">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card card-signin my-5 transparent">
+            <div class="card-body transparent">
+                <h5 class="card-title text-center text-white">{{ form_title }}</h5>
+                <form class="form-signin d-grid text-white" method="POST"
+                {% if is_media %}
+                enctype="multipart/form-data"
+                {% endif %}
+                >
+                    {% csrf_token %}
+                    {{ form }}
+                    <button class="btn btn-lg btn-primary text-uppercase" type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

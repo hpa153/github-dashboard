@@ -1,25 +1,54 @@
-from django.shortcuts import render
-import requests
-import pygal
-from pygal.style import DarkSolarizedStyle
+from django.shortcuts import render, redirect
+from pathlib import Path
+import random
+
+from account.models import Account
+from github.models import Chart
+from github.helpers import retrieve_data, retrieve_user_info, render_chart, display_charts
 
 # Create your views here.
-# Retrieve data from API
-def retrieve_data():
-  repo_request = requests.get("https://api.github.com/users/hpa153/repos")
-  return repo_request.json()
-
 # Homepage
 def homepage(request):
+  user = retrieve_user_info(request)
+  print(user)
 
   context = {
+    "user": user
   }
 
   return render(request, 'pages/home.html', context)
 
-# Languages page
-def languages(request):
-  repos = retrieve_data()
+# Dashboard page
+def dashboard(request):
+  user = retrieve_user_info(request)
+  repos = retrieve_data(request)
+
+  # Retrieve data from form
+  if request.method == 'POST':
+    repo = request.POST['repo']
+    name = user['username'] + "_" + repo
+    chart_style = request.POST['style']
+    chart_type = request.POST['chart']
+
+    # Check if any chart has same name
+    existing_charts = Chart.objects.all()
+
+    for chart in existing_charts:
+      if chart.name == name:
+        name += "_" + str(random.randint(0, 100))
+
+    # Render the chart to display
+    render_chart(request, name, repo, chart_style, chart_type)
+
+    # and save to database
+    Chart.objects.create(
+      user_id = Account.objects.get(username=user['username']),
+      name = name,
+      repo = repo,
+      path = str(Path(__file__).parent.parent) + "/uploads/charts/" + name + ".svg",
+      chart_style = chart_style,
+      chart_type = chart_type
+    )
 
   # Get options for select field
   repo_list = []
@@ -27,56 +56,57 @@ def languages(request):
   for repo in repos:
     repo_list.append(repo["name"])
 
-  # Create chart and get data for chart
-  pie_chart = pygal.Pie(inner_radius=.4, style=DarkSolarizedStyle)
-  
-  # Get selected repo
-  repo_name = ""
-
-  if 'repo' in request.GET:
-    repo_name = request.GET["repo"]
-  else:
-    repo_name = repo_list[0]
-  
-  repo_languages = requests.get("https://api.github.com/repos/hpa153/" + repo_name + "/languages").json()
-  
-  # Fill chart
-  for name, value in repo_languages.items():
-    pie_chart.add(name, value)
-  
-  pie_chart.render_to_file("./static/charts/pie_chart.svg")
+  # Get charts to display  
+  charts_to_display = display_charts(user['id'])
 
   context = {
     "repo_list": repo_list,
-    "current_repo": repo_name,
+    "user": user,
+    "charts": charts_to_display,
   }
     
-  return render(request, 'pages/languages.html', context)
+  return render(request, 'pages/dashboard.html', context)
 
 # Repos page
 def repos(request):
-  repos = retrieve_data()
+  user = retrieve_user_info(request)
+  
+  repos = retrieve_data(request)
 
   context = {
+    "user": user,
     "repos": repos
   }
     
   return render(request, 'pages/repos.html', context)
 
-# Sizes page
-def sizes(request):
-  repos = retrieve_data()
-
-  bar_chart = pygal.HorizontalBar(style=DarkSolarizedStyle)
-
-  for repo in repos:
-    label = repo["name"]
-    size = repo["size"]
-    bar_chart.add(label, size)
-  
-  bar_chart.render_to_file("./static/charts/bar_chart.svg")
+# Users page
+def users(request):
+  user = retrieve_user_info(request)
+  users = Account.objects.all()
 
   context = {
+    "user": user,
+    "users": users
   }
   
-  return render(request, 'pages/sizes.html', context)
+  return render(request, 'pages/users.html', context)
+
+def view_user(request, user_id):
+  user = retrieve_user_info(request)
+    
+  # Get charts to display  
+  charts_to_display = display_charts(user_id)
+
+  context = {
+      'user': user,
+      'charts': charts_to_display,
+      'is_viewing_user': True,
+  }
+  return render(request, 'pages/user_dashboard.html', context)
+
+def delete_chart(request, chart):
+  chart_to_delete = Chart.objects.get(name=chart)
+  chart_to_delete.delete()
+
+  return redirect(request.META.get('HTTP_REFERER', '/dashboard'))

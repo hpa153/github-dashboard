@@ -2,16 +2,22 @@
 
 {% block title %}GitHub Statistics{% endblock %}
 {% block nav_home_class %}active{% endblock %}
-{% block page-title %}Phuong Anh Hoang's GitHub Statistics{% endblock %}
+{% block page-title %}
+{% if user.is_auth %}
+{{user.username}}'s GitHub Statistics
+{% else %}
+GitHub Statistics
+{% endif %}
+{% endblock %}
 
 {% block content %}
 
 <div class="row text-center">
-  <p>These are the statistics of my GitHub. Feel free to browse around to discover more about me projects!</p>
+  <p>These are the statistics of {{user.username}}'s GitHub. Feel free to browse around to discover different functionalities to diplay your repos!</p>
 </div>
 <div class="row justify-content-center">
   <div class="card text-white border-dark transparent m-3 col-sm-12 col-md-4" style="max-width: 18rem;">
-    <div class="card-header">All Repositories</div>
+    <div class="card-header">My Repositories</div>
     <div class="card-body">
       <a href="{% url 'repos' %}">
         <img class="img-fluid" src="../../../static/git.png" alt="">
@@ -19,18 +25,18 @@
     </div>
   </div>
   <div class="card text-white border-dark transparent m-3 col-sm-12 col-md-4" style="max-width: 18rem;">
-    <div class="card-header">Repository Sizes</div>
+    <div class="card-header">Users</div>
     <div class="card-body">
-      <a href="{% url 'sizes' %}">
-        <img class="img-fluid" src="../../../static/sizes.png" alt="">
+      <a href="{% url 'users' %}">
+        <img class="img-fluid" src="../../../static/users.jpg" alt="">
       </a>
     </div>
   </div>
   <div class="card text-white border-dark transparent m-3 col-sm-12 col-md-4" style="max-width: 18rem;">
-    <div class="card-header">Project Languages</div>
+    <div class="card-header">My Dashboard</div>
     <div class="card-body">
-      <a href="{% url 'languages' %}">
-        <img class="img-fluid" src="../../../static/languages.jpg" alt="">
+      <a href="{% url 'dashboard' %}">
+        <img class="img-fluid" src="../../../static/dashboard.jpg" alt="">
       </a>
     </div>
   </div>
