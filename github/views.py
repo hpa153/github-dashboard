@@ -56,8 +56,11 @@ def dashboard(request):
   for repo in repos:
     repo_list.append(repo["name"])
 
-  # Get charts to display  
-  charts_to_display = display_charts(user['id'])
+  # Get charts to display 
+  charts_to_display =  []
+
+  if request.user.is_authenticated:
+    charts_to_display = display_charts(user['id'])
 
   context = {
     "repo_list": repo_list,
