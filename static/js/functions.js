@@ -1,5 +1,6 @@
-const displayChart = () => {
+const displayChart = (id) => {
   if(window.innerHeight < window.innerWidth) {
-    document.querySelector(".zoomed-container").classList.toggle("hide-chart");
+    let myId = id.includes("/") ? id.split("/")[0] : id;
+    document.getElementById(myId).classList.toggle("hide-chart");
   }
 }
