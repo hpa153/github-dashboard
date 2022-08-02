@@ -10,7 +10,6 @@ from github.helpers import retrieve_data, retrieve_user_info, render_chart, disp
 # Homepage
 def homepage(request):
   user = retrieve_user_info(request)
-  print(user)
 
   context = {
     "user": user
@@ -97,6 +96,9 @@ def users(request):
 
 def view_user(request, user_id):
   user = retrieve_user_info(request)
+
+  # Get user name
+  name = Account.objects.get(id=user_id).username
     
   # Get charts to display  
   charts_to_display = display_charts(user_id)
@@ -105,6 +107,7 @@ def view_user(request, user_id):
       'user': user,
       'charts': charts_to_display,
       'is_viewing_user': True,
+      'username': name,
   }
   return render(request, 'pages/user_dashboard.html', context)
 
