@@ -132,6 +132,12 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
+if os.environ.get('DATABASE_URL'):
+    # Configure Django App for Heroku
+    DEBUG = False
+    import django_heroku
+    django_heroku.settings(locals())
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 

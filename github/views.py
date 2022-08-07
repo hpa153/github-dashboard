@@ -37,16 +37,13 @@ def dashboard(request):
         name += "_" + str(random.randint(0, 100))
 
     # Render the chart to display
-    render_chart(request, name, repo, chart_style, chart_type)
+    chart_to_render = render_chart(request, repo, chart_style, chart_type)
 
     # and save to database
     Chart.objects.create(
-      user_id = Account.objects.get(username=user['username']),
+      user = Account.objects.get(username=user['username']),
       name = name,
-      repo = repo,
-      path = str(Path(__file__).parent.parent) + "/uploads/charts/" + name + ".svg",
-      chart_style = chart_style,
-      chart_type = chart_type
+      chart = chart_to_render,
     )
 
   # Get options for select field

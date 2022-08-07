@@ -27,7 +27,7 @@ def retrieve_user_info(request):
   return user
 
 # Render chart
-def render_chart(request, chart_name, repo, chart_style, chart_type):
+def render_chart(request, repo, chart_style, chart_type):
   github = request.user.github
   repo_languages = requests.get("https://api.github.com/repos/" + github + "/" + repo + "/languages").json()
   
@@ -56,18 +56,18 @@ def render_chart(request, chart_name, repo, chart_style, chart_type):
   for name, value in repo_languages.items():
     chart.add(name, value)
   
-  chart.render_to_file("./uploads/charts/" + chart_name + ".svg")
+  return chart.render_data_uri()
 
 # Retrieve charts to display
 def display_charts(user_id):
-  charts = list(Chart.objects.filter(user_id=user_id))
+  charts = list(Chart.objects.filter(user=user_id))
   
   charts_to_display = []
 
   for chart in charts:
     charts_to_display.append({
       "name": chart.name,
-      "path": chart.path
+      "chart": chart.chart
     })
 
   return charts_to_display

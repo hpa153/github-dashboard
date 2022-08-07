@@ -16,7 +16,7 @@
   >
     <div class="card-header repo-header">{{chart.name}}</div>
     <div class="card-body">
-      <embed class="img-fluid" type="image/svg+xml" src="../../../uploads/charts/{{chart.name}}.svg" />
+      <embed class="img-fluid" type="image/svg+xml" src="{{chart.chart | safe}}" />
     </div>
   </div>
   <div 
