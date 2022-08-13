@@ -41,7 +41,7 @@ class Account(AbstractBaseUser):
   username = models.CharField(max_length=30, unique=True)
   email = models.EmailField(max_length=60, unique=True)
   github = models.CharField(max_length=30)
-  profile_picture = models.FileField(upload_to='account_images/', null=True, blank=True)
+  profile_picture = models.FileField(upload_to="profile-pictures")
   is_admin = models.BooleanField(default=False)
   is_active = models.BooleanField(default=True)
   is_staff = models.BooleanField(default=False)

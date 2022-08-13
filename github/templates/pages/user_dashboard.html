@@ -30,7 +30,7 @@
   hide-chart"
   onclick="displayChart(this.id)"
   >
-    <embed class="zoomed-chart" type="image/svg+xml" src="../../../uploads/charts/{{chart.name}}.svg" />
+    <embed class="zoomed-chart" type="image/svg+xml" src="{{chart.chart | safe}}" />
   </div>
   {% endfor %}
 </div>

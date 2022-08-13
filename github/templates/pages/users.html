@@ -6,7 +6,6 @@
 
 {% block content %}
 
-<!-- <embed type="image/svg+xml" src="../../../static/charts/bar_chart.svg" /> -->
 <div class="container d-flex flex-column flex-wrap flex-md-row justify-content-center align-items-center">
   {% for account in users %}
   <div class="card text-white border-dark transparent m-3 col-sm-12 col-md-4" style="max-width: 18rem;">
@@ -15,9 +14,9 @@
       <a href="{% url 'view_user' account.id %}">
         <img class="img-fluid user-img" 
         {% if account.profile_picture %}
-        src="uploads/{{account.profile_picture}}"
+        src="https://pa-orm-dashboard.s3.amazonaws.com/{{account.profile_picture}}"
         {% else %}
-        src="../../../static/3414990.jpg"
+        src="https://pa-orm-dashboard.s3.amazonaws.com/img/3414990.jpg"
         {% endif %}
         alt="profile-pic"/>
       </a>
